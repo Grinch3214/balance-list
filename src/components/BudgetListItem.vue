@@ -26,21 +26,17 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 
 export default {
   name: "BudgetListItem",
-  props: {
-    list: {
-      type: Object,
-      default: () => ({}),
-    },
-  },
   data: () => ({
 		labelSort: 'all',
 	}),
 	computed: {
+		...mapGetters(['testList']),
 		sortBalanceList() {
-			return Object.values(this.list).filter(elem => {
+			return Object.values(this.testList).filter(elem => {
 				if (elem.type === this.labelSort) {
 					return elem.type === this.labelSort
 				} else if (this.labelSort === 'all') {
@@ -50,9 +46,7 @@ export default {
 		},
 	},
   methods: {
-    deleteItem(id) {
-      this.$emit("deleteItem", id);
-    },
+		...mapActions(['deleteItem']),
 		confimForDelete(id) {
 			if(confirm('Are you sure? ')) {
 				return this.deleteItem(id)

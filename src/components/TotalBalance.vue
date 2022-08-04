@@ -5,20 +5,16 @@
 		'positive-balance': isPositiveTotalBalance,
 		'neutral-balance': isNetralTotalBalance}"
 	>
-		Balance: {{ total }}
+		Balance: {{ totalBalanceList }}
 	</div>
 </template>
 
 <script>
+import { mapGetters } from 'vuex'
 export default {
 	name: 'TotalBalance',
-	props: {
-		total: {
-			type: Number,
-			default: 0
-		}
-	},
 	computed: {
+		...mapGetters(['totalBalanceList']),
 		isNegativeTotalBalance() {
 			return this.total < 0
 		},

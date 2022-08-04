@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-		<form-balance @submitForm="onSubmit" />
-		<total-balance :total="totalBalance" />
-    <budget-list :list="list" @deleteItem="onDeleteItem" />
+		<form-balance />
+		<total-balance />
+    <budget-list />
   </div>
 </template>
 
@@ -10,6 +10,7 @@
 import BudgetList from './components/BudgetList.vue'
 import TotalBalance from './components/TotalBalance.vue'
 import FormBalance from './components/FormBalance.vue'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'App',
@@ -18,44 +19,21 @@ export default {
 		TotalBalance,
 		FormBalance,
   },
-	data:() => ({
-		list: {
-			1: {
-				type: 'income',
-				value: 100,
-				comment: 'Some comment',
-				id: 1
-			},
-			2: {
-				type: 'outcome',
-				value: 50,
-				comment: 'Some outcome comment',
-				id: 2
-			}
-		},
-	}),
+	data:() => ({}),
 	computed: {
-		totalBalance() {
-			return Object.values(this.list).reduce((acc, item) => {
-				if (item.type === 'outcome' && item.value > 0) {
-					return acc - item.value
-				} else {
-					return acc + item.value
-				}
-			}, 0)
-		},
+		...mapGetters(['totalBalanceList']),
 	},
 	methods: {
-		onDeleteItem(id) {
-			this.$delete(this.list, id)
-		},
-		onSubmit(data) {
-			const newObj = {
-				...data,
-				id: String(Math.round(Math.random()*100))
-			};
-			this.$set(this.list, newObj.id, newObj)
-		}
+		// onDeleteItem(id) {
+		// 	this.$delete(this.list, id)
+		// },
+		// onSubmit(data) {
+		// 	const newObj = {
+		// 		...data,
+		// 		id: String(Math.round(Math.random()*100))
+		// 	};
+		// 	this.$set(this.list, newObj.id, newObj)
+		// }
 	}
 }
 </script>

@@ -19,6 +19,8 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
+
 export default {
 	name: 'FormBalance',
 	data() {
@@ -54,11 +56,12 @@ export default {
 		}
 	},
 	methods: {
+		...mapActions(['addNewTransaction']),
 		onSubmit() {
 			this.$refs.addItemForm.validate((valid) => {
 				if (valid) {
-					this.$emit('submitForm', {...this.formData})
-					this.$refs.addItemForm.resetFields()
+					this.addNewTransaction(this.formData);
+					this.$refs.addItemForm.resetFields();
 				}
 			})
 		}
